@@ -3,25 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { useLocale } from "@/lib/i18n/locale-provider";
 import { useSession } from "@/hooks/use-session";
 import { cn } from "@/lib/utils";
 
-/** Transparent over the dark tour, turns to ivory paper once the visitor reaches the content. Always visible. */
+/** Transparent at the top of the home page, dark glass once scrolling; ivory on inner pages. Always visible. */
 export function SiteHeader({ solid = false }: { solid?: boolean }) {
   const { t, toggle } = useLocale();
   const { user, profile } = useSession();
-  const { scrollY } = useScroll();
-  const [paper, setPaper] = useState(solid);
+  const { scrollY, scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 40 });
+  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const paper = solid;
 
-  useMotionValueEvent(scrollY, "change", (y) => {
-    const tour = document.getElementById("tour");
-    const tourEnd = tour ? tour.offsetTop + tour.offsetHeight - 80 : 0;
-    setPaper(solid || y > tourEnd);
-  });
+  useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 40));
 
   // Freeze the page behind the open menu and close it with Escape.
   useEffect(() => {
@@ -48,8 +46,13 @@ export function SiteHeader({ solid = false }: { solid?: boolean }) {
 
   return (
     <>
-      <header className={cn("fixed inset-x-0 top-0 z-50 transition-colors duration-500", dark ? "text-ivory" : "border-b border-line bg-ivory/95 text-ink backdrop-blur-md")}>
-        {dark && <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-night/80 to-transparent" />}
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500",
+          !dark ? "border-b border-line bg-ivory/95 text-ink backdrop-blur-md" : scrolled ? "border-b border-ivory/10 bg-night/90 text-ivory backdrop-blur-xl" : "border-b border-transparent text-ivory",
+        )}
+      >
+        {!solid && <motion.div aria-hidden style={{ scaleX: progress }} className="absolute inset-x-0 bottom-0 h-px origin-left bg-gold" />}
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 md:h-[72px] md:px-8">
           <Link href="/" onClick={() => setOpen(false)} className="flex min-w-0 items-center gap-2.5" aria-label="The Purple Skin Friendly Salon and Spa, home">
             <Image src="/icons/icon-192.png" alt="" width={34} height={34} className="shrink-0 rounded-full" />
