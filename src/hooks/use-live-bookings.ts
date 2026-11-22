@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { supabaseBrowser } from "@/lib/supabase/client";
+import { uniqueChannel } from "@/lib/realtime";
 import type { Booking } from "@/lib/types";
 
 type Query = {
@@ -42,7 +43,7 @@ export function useLiveBookings({ filter, from, to, enabled = true, channel }: Q
     load();
     const db = supabaseBrowser();
     const ch = db
-      .channel(channel)
+      .channel(uniqueChannel(channel))
       .on("postgres_changes", { event: "*", schema: "public", table: "bookings", ...(filter ? { filter } : {}) }, () => load())
       .subscribe();
     const onFocus = () => load();

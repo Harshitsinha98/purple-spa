@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Bell, BellRing, CalendarDays, Check, Clock, Download, IndianRupee, ListChecks, Loader2, Lock, LogOut, Play, StickyNote, Sunrise, TrendingUp, UserX, Wallet, X } from "lucide-react";
 import { supabaseBrowser } from "@/lib/supabase/client";
+import { uniqueChannel } from "@/lib/realtime";
 import { useSession } from "@/hooks/use-session";
 import { useNow } from "@/hooks/use-now";
 import { pick, useLocale } from "@/lib/i18n/locale-provider";
@@ -35,7 +36,7 @@ function useStaffBookings(from: string, to: string, enabled: boolean) {
      
     load();
     const db = supabaseBrowser();
-    const ch = db.channel(`staff-${from}`).on("postgres_changes", { event: "INSERT", schema: "public", table: "booking_events" }, () => load()).subscribe();
+    const ch = db.channel(uniqueChannel("staff")).on("postgres_changes", { event: "INSERT", schema: "public", table: "booking_events" }, () => load()).subscribe();
     const id = setInterval(load, 60_000);
     window.addEventListener("focus", load);
     return () => {

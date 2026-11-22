@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, CheckCircle2, Loader2, UserRound } from "lucide-react";
 import { supabaseBrowser } from "@/lib/supabase/client";
+import { uniqueChannel } from "@/lib/realtime";
 import { useSession } from "@/hooks/use-session";
 import { useNow } from "@/hooks/use-now";
 import { pick, useLocale } from "@/lib/i18n/locale-provider";
@@ -47,7 +48,7 @@ export function BookingDetail() {
     load();
     const db = supabaseBrowser();
     const ch = db
-      .channel(`booking-${id}`)
+      .channel(uniqueChannel(`booking-${id}`))
       .on("postgres_changes", { event: "*", schema: "public", table: "bookings", filter: `id=eq.${id}` }, () => load())
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "booking_events", filter: `booking_id=eq.${id}` }, () => load())
       .subscribe();

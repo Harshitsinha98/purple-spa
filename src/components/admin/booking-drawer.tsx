@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarClock, Check, ExternalLink, Loader2, MessageCircle, Phone, Play, RotateCcw, Undo2, UserRound, UserX, Wand2, X } from "lucide-react";
 import { supabaseBrowser } from "@/lib/supabase/client";
+import { uniqueChannel } from "@/lib/realtime";
 import { useNow } from "@/hooks/use-now";
 import { api } from "@/lib/checkout";
 import { fmtDate, fmtTime, inr, istDate, minutesLabel, prettyPhone, telHref, waHref } from "@/lib/format";
@@ -75,7 +76,7 @@ export function BookingDrawer({ id, onClose, onChanged, staff }: { id: string | 
     load();
     const db = supabaseBrowser();
     const ch = db
-      .channel(`admin-booking-${id}`)
+      .channel(uniqueChannel(`admin-booking-${id}`))
       .on("postgres_changes", { event: "*", schema: "public", table: "bookings", filter: `id=eq.${id}` }, () => load())
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "booking_events", filter: `booking_id=eq.${id}` }, () => load())
       .subscribe();
