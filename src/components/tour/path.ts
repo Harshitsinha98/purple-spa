@@ -1,77 +1,74 @@
 /**
  * The walk-through path. Scroll progress (0 → 1) maps to the camera's z position.
- * Each portal is a real photo of the spa; the camera pauses in front of it, then walks through.
+ * Each portal is a real photo of the spa; the camera rests in front of it, then walks through.
  */
 export const DOOR_Z = 0;
-export const CAMERA_START_Z = 5.5;
 
 export const PORTALS = [
   { image: "reception-front", z: -7 },
-  { image: "corridor-neon", z: -16 },
-  { image: "lounge-mural", z: -25 },
-  { image: "art-wall", z: -34 },
-  { image: "room-magenta", z: -43 },
+  { image: "corridor-neon", z: -15 },
+  { image: "lounge-mural", z: -23 },
+  { image: "art-wall", z: -31 },
+  { image: "room-magenta", z: -39 },
 ] as const;
 
-export const WALL_FRAMES = [
-  { image: "reception-desk", side: -1, z: -10.5 },
-  { image: "entry-blossom", side: 1, z: -12 },
-  { image: "lounge-horses", side: 1, z: -20 },
-  { image: "corridor-jaali", side: -1, z: -21 },
-  { image: "room-chevron", side: -1, z: -29 },
-  { image: "lounge-butterfly", side: 1, z: -30 },
-  { image: "room-stripes", side: 1, z: -38.5 },
-  { image: "room-chevron-2", side: -1, z: -39 },
-] as const;
-
-const DWELL = 3.4; // how far in front of a portal the camera rests
-
-// [progress, z]
-const KEYS: [number, number][] = [
-  [0, CAMERA_START_Z],
-  [0.1, 2.7],
-  [0.17, -1],
-  [0.24, PORTALS[0].z + DWELL],
-  [0.3, PORTALS[0].z + DWELL - 0.6],
-  [0.38, PORTALS[1].z + DWELL],
-  [0.44, PORTALS[1].z + DWELL - 0.6],
-  [0.52, PORTALS[2].z + DWELL],
-  [0.58, PORTALS[2].z + DWELL - 0.6],
-  [0.66, PORTALS[3].z + DWELL],
-  [0.72, PORTALS[3].z + DWELL - 0.6],
-  [0.86, PORTALS[4].z + DWELL],
-  [1, PORTALS[4].z + 2.3],
-];
-
-export const CAMERA_END_Z = KEYS[KEYS.length - 1][1];
+// How far the camera stands from a photo, so it fills a comfortable part of the screen.
+const VIEW = {
+  desktop: { start: 6.2, dwell: 4.3, end: 2.55 },
+  mobile: { start: 7.4, dwell: 3.7, end: 2.35 },
+};
 
 const smooth = (t: number) => t * t * (3 - 2 * t);
 
-export function cameraZ(p: number) {
+function keys(mobile: boolean): [number, number][] {
+  const v = mobile ? VIEW.mobile : VIEW.desktop;
+  const at = (i: number) => PORTALS[i].z + v.dwell;
+  return [
+    [0, v.start],
+    [0.08, v.start - 0.6],
+    [0.17, -1.2],
+    [0.24, at(0)],
+    [0.31, at(0) - 0.4],
+    [0.38, at(1)],
+    [0.45, at(1) - 0.4],
+    [0.52, at(2)],
+    [0.59, at(2) - 0.4],
+    [0.66, at(3)],
+    [0.73, at(3) - 0.4],
+    [0.84, at(4)],
+    [0.97, PORTALS[4].z + v.end],
+    [1, PORTALS[4].z + v.end],
+  ];
+}
+const KEYS = { desktop: keys(false), mobile: keys(true) };
+
+export function cameraZ(p: number, mobile = false) {
+  const k = mobile ? KEYS.mobile : KEYS.desktop;
   const x = Math.min(1, Math.max(0, p));
-  for (let i = 1; i < KEYS.length; i++) {
-    const [p1, z1] = KEYS[i];
+  for (let i = 1; i < k.length; i++) {
+    const [p1, z1] = k[i];
     if (x <= p1) {
-      const [p0, z0] = KEYS[i - 1];
+      const [p0, z0] = k[i - 1];
       return z0 + (z1 - z0) * smooth((x - p0) / (p1 - p0));
     }
   }
-  return CAMERA_END_Z;
+  return k[k.length - 1][1];
 }
 
 /** 0 = doors shut, 1 = fully open, driven by how close the camera is to the door. */
-export function doorOpen(camZ: number) {
-  const t = (2.9 - camZ) / (2.9 - 0.6);
+export function doorOpen(camZ: number, mobile = false) {
+  const from = (mobile ? VIEW.mobile : VIEW.desktop).start - 1.4;
+  const t = (from - camZ) / (from - 0.4);
   return smooth(Math.min(1, Math.max(0, t)));
 }
 
 /** Progress windows for the text chapters overlaid on the scene. */
 export const CHAPTER_WINDOWS: [number, number][] = [
-  [0.0, 0.14],
+  [0.0, 0.13],
   [0.2, 0.33],
   [0.34, 0.47],
   [0.48, 0.61],
   [0.62, 0.75],
-  [0.8, 0.92],
+  [0.79, 0.9],
 ];
-export const FINAL_WINDOW: [number, number] = [0.92, 1];
+export const FINAL_WINDOW: [number, number] = [0.91, 1];

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { BarChart3, Bell, BellRing, CalendarDays, CreditCard, LayoutDashboard, Loader2, LogOut, Settings, Sparkles, Users } from "lucide-react";
+import { BarChart3, Bell, BellRing, CalendarDays, Contact, CreditCard, LayoutDashboard, Loader2, LogOut, Settings, Sparkles, Users } from "lucide-react";
 import { useSession } from "@/hooks/use-session";
 import { currentPushSubscription, enablePush, pushSupported, registerSW } from "@/lib/push-client";
 import { cn } from "@/lib/utils";
@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { href: "/admin", label: "Today", icon: LayoutDashboard },
   { href: "/admin/bookings", label: "Bookings", icon: CalendarDays },
+  { href: "/admin/customers", label: "Customers", icon: Contact },
   { href: "/admin/services", label: "Services", icon: Sparkles },
   { href: "/admin/employees", label: "Employees", icon: Users },
   { href: "/admin/payments", label: "Payments", icon: CreditCard },

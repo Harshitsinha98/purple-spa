@@ -9,25 +9,11 @@ import { api } from "@/lib/checkout";
 import { fmtDate, fmtTime, inr, istDate, minutesLabel, prettyPhone, telHref } from "@/lib/format";
 import { StatusBadge, holdExpired } from "@/components/booking/status-badge";
 import { Modal, Notice, Panel } from "./ui";
+import { BookingDrawer, useStaffList } from "./booking-drawer";
 import type { Booking, BookingStatus, Employee, Service, Settings } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 type Skills = Record<string, Set<string>>; // employee_id → service ids
-
-function useStaff() {
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [skills, setSkills] = useState<Skills>({});
-  useEffect(() => {
-    const db = supabaseBrowser();
-    Promise.all([db.from("employees").select("*").eq("is_active", true).order("full_name"), db.from("employee_services").select("*")]).then(([e, s]) => {
-      setEmployees((e.data as Employee[]) ?? []);
-      const map: Skills = {};
-      for (const r of (s.data as { employee_id: string; service_id: string }[]) ?? []) (map[r.employee_id] ??= new Set()).add(r.service_id);
-      setSkills(map);
-    });
-  }, []);
-  return { employees, skills };
-}
 
 const addDays = (d: string, n: number) => {
   const x = new Date(`${d}T12:00:00+05:30`);
@@ -41,7 +27,9 @@ export function BookingsBoard({ compact }: { compact?: boolean }) {
   const [day, setDay] = useState(istDate(0));
   const [status, setStatus] = useState<"active" | "all" | BookingStatus>("active");
   const [walkIn, setWalkIn] = useState(false);
-  const { employees, skills } = useStaff();
+  const staff = useStaffList();
+  const { employees, skills } = staff;
+  const [openId, setOpenId] = useState<string | null>(null);
   const focus = params.get("focus");
 
   const from = new Date(`${day}T00:00:00+05:30`).toISOString();
@@ -98,18 +86,19 @@ export function BookingsBoard({ compact }: { compact?: boolean }) {
         <ul className="space-y-3">
           {rows.map((b) => (
             <li key={b.id}>
-              <BookingRow b={b} employees={employees} skills={skills} onChange={reload} highlight={focus === b.id} />
+              <BookingRow b={b} employees={employees} skills={skills} onChange={reload} highlight={focus === b.id} onOpen={() => setOpenId(b.id)} />
             </li>
           ))}
         </ul>
       )}
 
+      <BookingDrawer id={openId} onClose={() => setOpenId(null)} onChanged={reload} staff={staff} />
       <WalkInModal open={walkIn} onClose={() => setWalkIn(false)} onCreated={(d) => { setWalkIn(false); setDay(d); reload(); }} />
     </div>
   );
 }
 
-function BookingRow({ b, employees, skills, onChange, highlight }: { b: Booking; employees: Employee[]; skills: Skills; onChange: () => void; highlight: boolean }) {
+function BookingRow({ b, employees, skills, onChange, highlight, onOpen }: { b: Booking; employees: Employee[]; skills: Skills; onChange: () => void; highlight: boolean; onOpen: () => void }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [pay, setPay] = useState(false);
@@ -144,7 +133,7 @@ function BookingRow({ b, employees, skills, onChange, highlight }: { b: Booking;
         </div>
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <p className="font-semibold">{b.customer_name}</p>
+            <button onClick={onOpen} className="cursor-pointer font-semibold underline-offset-4 hover:underline">{b.customer_name}</button>
             <StatusBadge status={b.status} expired={holdExpired(b)} />
             <span className="text-xs text-muted">#{b.code}{b.source === "admin" && " · walk-in"}</span>
           </div>
@@ -185,6 +174,8 @@ function BookingRow({ b, employees, skills, onChange, highlight }: { b: Booking;
           )}
           <div className="flex flex-wrap gap-1.5">
             {b.status === "assigned" && <ActBtn busy={busy === "start"} onClick={() => run("start", `/api/bookings/${b.id}/status`, { status: "in_progress" })}>Start</ActBtn>}
+            {b.status === "in_progress" && <ActBtn busy={busy === "undo"} onClick={() => run("undo", `/api/bookings/${b.id}/status`, { status: "assigned" })}>Undo start</ActBtn>}
+            <ActBtn onClick={onOpen}>Details</ActBtn>
             {b.status === "in_progress" && <ActBtn busy={busy === "done"} onClick={() => run("done", `/api/bookings/${b.id}/status`, { status: "completed" })}>Complete</ActBtn>}
             {(b.status === "assigned" || b.status === "confirmed") && <ActBtn busy={busy === "ns"} onClick={() => confirm("Mark as no-show?") && run("ns", `/api/bookings/${b.id}/status`, { status: "no_show" })}>No-show</ActBtn>}
             {due > 0 && !["cancelled", "pending_payment"].includes(b.status) && <ActBtn onClick={() => setPay((v) => !v)}>Record payment</ActBtn>}

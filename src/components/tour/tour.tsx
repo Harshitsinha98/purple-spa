@@ -52,6 +52,7 @@ function ScrollTour({ ready, small }: { ready: boolean; small: boolean }) {
   const progress = useSpring(scrollYProgress, { stiffness: 70, damping: 22, mass: 0.5, restDelta: 0.0001 });
   const hintOpacity = useTransform(scrollYProgress, [0, 0.03], [1, 0]);
   const bar = useTransform(progress, [0, 1], ["0%", "100%"]);
+  const shade = useTransform(progress, [0.86, 0.94], [1, 0]);
 
   return (
     <section ref={ref} id="tour" aria-label="Walk into the spa" className="relative h-[720svh] bg-night text-ivory">
@@ -61,7 +62,7 @@ function ScrollTour({ ready, small }: { ready: boolean; small: boolean }) {
             frameloop={inView ? "always" : "never"}
             dpr={[1, small ? 1.5 : 1.75]}
             gl={{ antialias: !small, powerPreference: "high-performance" }}
-            camera={{ fov: small ? 68 : 55, near: 0.1, far: 60, position: [0, 1.6, 5.5] }}
+            camera={{ fov: small ? 68 : 55, near: 0.1, far: 60, position: [0, 1.6, 6.2] }}
             className="absolute! inset-0"
             aria-hidden
           >
@@ -72,18 +73,17 @@ function ScrollTour({ ready, small }: { ready: boolean; small: boolean }) {
         )}
         <Loader />
 
-        {/* vignette so text stays legible over bright photos */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(10,4,14,0.75)_100%)]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-night/90 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-[55%] bg-gradient-to-r from-night/90 via-night/55 to-transparent md:block" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-night via-night/70 to-transparent md:hidden" />
+        {/* Soft shading only where text sits: left third on desktop, lower half on phones. Fades out in the last room. */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(14,6,19,0.5)_100%)]" />
+        <motion.div style={{ opacity: shade }} className="pointer-events-none absolute inset-y-0 left-0 hidden w-[44%] bg-gradient-to-r from-[#0e0613]/85 via-[#0e0613]/40 to-transparent md:block" />
+        <motion.div style={{ opacity: shade }} className="pointer-events-none absolute inset-x-0 bottom-0 h-[52%] bg-gradient-to-t from-[#0e0613] via-[#0e0613]/85 to-transparent md:hidden" />
 
         {t.tour.chapters.map((c, i) => (
           <Chapter key={c.n} progress={progress} window={CHAPTER_WINDOWS[i]} n={c.n} title={c.title} body={c.body} first={i === 0} />
         ))}
         <Final progress={progress} />
 
-        <motion.div style={{ opacity: hintOpacity }} className="pointer-events-none absolute inset-x-0 bottom-8 flex flex-col items-center gap-2 text-ivory/80">
+        <motion.div style={{ opacity: hintOpacity }} className="pointer-events-none absolute inset-x-0 bottom-3 flex flex-col items-center gap-1 text-ivory/70 md:bottom-8 md:gap-2">
           <span className="eyebrow">{t.tour.scroll}</span>
           <ArrowDown className="size-4 animate-bounce" aria-hidden />
         </motion.div>
@@ -99,24 +99,25 @@ function ScrollTour({ ready, small }: { ready: boolean; small: boolean }) {
 function Chapter({ progress, window: [a, b], n, title, body, first }: { progress: MotionValue<number>; window: [number, number]; n: string; title: string; body: string; first: boolean }) {
   const fadeIn = first ? a : a + 0.03;
   const opacity = useTransform(progress, first ? [0, b - 0.03, b] : [a, fadeIn, b - 0.03, b], first ? [1, 1, 0] : [0, 1, 1, 0]);
-  const y = useTransform(progress, [a, b], [24, -24]);
+  const y = useTransform(progress, [a, b], [18, -18]);
   const [visible, setVisible] = useState(first);
   useMotionValueEvent(opacity, "change", (v) => setVisible(v > 0.02));
 
   return (
-    <motion.div
-      style={{ opacity, y }}
+    <div
       aria-hidden={!visible}
-      className="pointer-events-none absolute inset-x-0 bottom-[12svh] px-6 md:bottom-auto md:left-[6vw] md:top-1/2 md:max-w-md md:-translate-y-1/2 md:px-0"
+      className="pointer-events-none absolute inset-x-0 bottom-[11svh] px-6 md:inset-x-auto md:bottom-auto md:left-[6vw] md:top-1/2 md:w-[min(30rem,34vw)] md:-translate-y-1/2 md:px-0"
     >
-      {first && <h1 className="eyebrow mb-6 text-gold-soft">The Purple Skin Friendly Salon and Spa · Bhopal</h1>}
-      <div className="flex items-baseline gap-4">
-        <span className="font-display text-5xl italic text-gold md:text-6xl">{n}</span>
-        <span className="h-px flex-1 bg-gold/40 md:max-w-24" />
-      </div>
-      <h2 className="display mt-3 text-4xl text-ivory md:text-6xl">{title}</h2>
-      <p className="mt-4 max-w-sm text-base leading-relaxed text-ivory/90 md:text-lg">{body}</p>
-    </motion.div>
+      <motion.div style={{ opacity, y }}>
+        {first && <h1 className="eyebrow mb-5 text-gold-soft">The Purple Skin Friendly Salon and Spa · Bhopal</h1>}
+        <div className="flex items-center gap-4">
+          <span className="font-display text-4xl italic leading-none text-gold md:text-5xl">{n}</span>
+          <span className="h-px w-16 bg-gold/50" />
+        </div>
+        <h2 className="display mt-4 text-[2.4rem] text-ivory md:text-6xl">{title}</h2>
+        <p className="mt-4 max-w-sm text-[0.98rem] leading-relaxed text-ivory/85 md:text-lg">{body}</p>
+      </motion.div>
+    </div>
   );
 }
 
@@ -130,7 +131,7 @@ function Final({ progress }: { progress: MotionValue<number> }) {
 
   return (
     <motion.div style={{ opacity, scale }} className={`absolute inset-0 flex flex-col items-center justify-center px-6 text-center ${active ? "" : "pointer-events-none"}`}>
-      <div className="absolute inset-0 bg-night/45" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0e0613]/70 via-[#0e0613]/25 to-[#0e0613]/45" />
       <p className="eyebrow relative text-gold-soft">The Purple Skin Friendly Salon and Spa</p>
       <h2 className="display relative mt-4 text-5xl text-ivory md:text-8xl">{t.tour.finalTitle}</h2>
       <Link href="/book" tabIndex={active ? 0 : -1} className="btn btn-gold relative mt-10 text-base">

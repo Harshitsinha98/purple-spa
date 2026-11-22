@@ -111,6 +111,7 @@ export default function SettingsAdmin() {
           <Toggle id="st-auto" label="Assign a therapist automatically when a booking is confirmed" checked={s.auto_assign} onChange={(v) => set("auto_assign", v)} />
           <div className="grid gap-4 pt-2 sm:grid-cols-2">
             {Field({ id: "st-cancel", label: "Customers can cancel up to (hours before)", children: <input id="st-cancel" className="field" inputMode="numeric" value={s.cancellation_hours} onChange={num("cancellation_hours")} /> })}
+            {Field({ id: "st-early", label: "Therapists can start a session (minutes before its time)", children: <input id="st-early" className="field" inputMode="numeric" value={s.staff_early_start_min ?? 0} onChange={num("staff_early_start_min")} />, help: "0 = only at the booked time. Admin can always start early." })}
           </div>
         </Panel>
 

@@ -13,5 +13,5 @@ export const POST = handle(async (req: Request, ctx: RouteContext<"/api/bookings
   const { amount, method, note } = Body.parse(await req.json());
   const booking = check(await caller.db.rpc("record_offline_payment", { p_booking: id, p_amount: amount, p_method: method, p_note: note ?? null })) as Booking;
   after(() => notifyPayment(booking.id, amount));
-  return NextResponse.json({ booking });
+  return NextResponse.json({ booking: { id: booking.id, status: booking.status, payment_status: booking.payment_status, amount_paid: booking.amount_paid } });
 });
