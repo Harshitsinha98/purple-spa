@@ -1,0 +1,938 @@
+[
+ {
+  "id": "fallback-massage",
+  "slug": "massage",
+  "kind": "spa",
+  "name_en": "Massage Therapies",
+  "name_hi": "मसाज थेरेपी",
+  "description_en": "Full sessions, chosen by the pressure you like.",
+  "description_hi": "पूरा सेशन, आपकी पसंद के दबाव के अनुसार।",
+  "sort": 1,
+  "is_active": true,
+  "services": [
+   {
+    "id": "fallback-lomi-lomi",
+    "category_id": "fallback-massage",
+    "slug": "lomi-lomi",
+    "name_en": "Lomi Lomi Massage",
+    "name_hi": "लोमी लोमी मसाज",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": "Light pressure",
+    "tag_hi": "हल्का दबाव",
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 1,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-lomi-lomi-60",
+      "service_id": "fallback-lomi-lomi",
+      "duration_min": 60,
+      "price": 1200,
+      "is_active": true
+     },
+     {
+      "id": "fallback-lomi-lomi-90",
+      "service_id": "fallback-lomi-lomi",
+      "duration_min": 90,
+      "price": 2200,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-swedish",
+    "category_id": "fallback-massage",
+    "slug": "swedish",
+    "name_en": "Swedish Massage",
+    "name_hi": "स्वीडिश मसाज",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": "Medium pressure",
+    "tag_hi": "मध्यम दबाव",
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 2,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-swedish-60",
+      "service_id": "fallback-swedish",
+      "duration_min": 60,
+      "price": 1500,
+      "is_active": true
+     },
+     {
+      "id": "fallback-swedish-90",
+      "service_id": "fallback-swedish",
+      "duration_min": 90,
+      "price": 2500,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-aroma",
+    "category_id": "fallback-massage",
+    "slug": "aroma",
+    "name_en": "Aroma Massage",
+    "name_hi": "अरोमा मसाज",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": "Medium pressure",
+    "tag_hi": "मध्यम दबाव",
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 3,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-aroma-60",
+      "service_id": "fallback-aroma",
+      "duration_min": 60,
+      "price": 1500,
+      "is_active": true
+     },
+     {
+      "id": "fallback-aroma-90",
+      "service_id": "fallback-aroma",
+      "duration_min": 90,
+      "price": 2500,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-balinese",
+    "category_id": "fallback-massage",
+    "slug": "balinese",
+    "name_en": "Balinese Massage",
+    "name_hi": "बालिनीज़ मसाज",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": "Medium pressure",
+    "tag_hi": "मध्यम दबाव",
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 4,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-balinese-60",
+      "service_id": "fallback-balinese",
+      "duration_min": 60,
+      "price": 1500,
+      "is_active": true
+     },
+     {
+      "id": "fallback-balinese-90",
+      "service_id": "fallback-balinese",
+      "duration_min": 90,
+      "price": 2500,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-deep-tissue",
+    "category_id": "fallback-massage",
+    "slug": "deep-tissue",
+    "name_en": "Deep Tissue Massage",
+    "name_hi": "डीप टिशू मसाज",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": "Hard pressure",
+    "tag_hi": "गहरा दबाव",
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 5,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-deep-tissue-60",
+      "service_id": "fallback-deep-tissue",
+      "duration_min": 60,
+      "price": 1800,
+      "is_active": true
+     },
+     {
+      "id": "fallback-deep-tissue-90",
+      "service_id": "fallback-deep-tissue",
+      "duration_min": 90,
+      "price": 3000,
+      "is_active": true
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fallback-spa-rituals",
+  "slug": "spa-rituals",
+  "kind": "spa",
+  "name_en": "Spa Rituals",
+  "name_hi": "स्पा रिचुअल्स",
+  "description_en": "Scrubs, gels and focused therapies.",
+  "description_hi": "स्क्रब, जेल और ख़ास थेरेपी।",
+  "sort": 2,
+  "is_active": true,
+  "services": [
+   {
+    "id": "fallback-aroma-scrub",
+    "category_id": "fallback-spa-rituals",
+    "slug": "aroma-scrub",
+    "name_en": "Aroma Scrub",
+    "name_hi": "अरोमा स्क्रब",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": "Body scrub",
+    "tag_hi": "बॉडी स्क्रब",
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 1,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-aroma-scrub-30",
+      "service_id": "fallback-aroma-scrub",
+      "duration_min": 30,
+      "price": 1200,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-onion-scrub",
+    "category_id": "fallback-spa-rituals",
+    "slug": "onion-scrub",
+    "name_en": "Onion Scrub",
+    "name_hi": "अनियन स्क्रब",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": "Body scrub",
+    "tag_hi": "बॉडी स्क्रब",
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 2,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-onion-scrub-30",
+      "service_id": "fallback-onion-scrub",
+      "duration_min": 30,
+      "price": 1500,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-charcoal-scrub",
+    "category_id": "fallback-spa-rituals",
+    "slug": "charcoal-scrub",
+    "name_en": "Charcoal Scrub",
+    "name_hi": "चारकोल स्क्रब",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": "Body scrub",
+    "tag_hi": "बॉडी स्क्रब",
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 3,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-charcoal-scrub-30",
+      "service_id": "fallback-charcoal-scrub",
+      "duration_min": 30,
+      "price": 2000,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-foot-reflexology",
+    "category_id": "fallback-spa-rituals",
+    "slug": "foot-reflexology",
+    "name_en": "Foot Reflexology",
+    "name_hi": "फुट रिफ्लेक्सोलॉजी",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 4,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-foot-reflexology-30",
+      "service_id": "fallback-foot-reflexology",
+      "duration_min": 30,
+      "price": 1000,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-neck-back",
+    "category_id": "fallback-spa-rituals",
+    "slug": "neck-back",
+    "name_en": "Neck & Back Massage",
+    "name_hi": "गर्दन और पीठ की मसाज",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 5,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-neck-back-30",
+      "service_id": "fallback-neck-back",
+      "duration_min": 30,
+      "price": 1000,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-ayurvedic-oil",
+    "category_id": "fallback-spa-rituals",
+    "slug": "ayurvedic-oil",
+    "name_en": "Ayurvedic Oil Massage",
+    "name_hi": "आयुर्वेदिक तेल मसाज",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 6,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-ayurvedic-oil-45",
+      "service_id": "fallback-ayurvedic-oil",
+      "duration_min": 45,
+      "price": 1800,
+      "is_active": true
+     },
+     {
+      "id": "fallback-ayurvedic-oil-90",
+      "service_id": "fallback-ayurvedic-oil",
+      "duration_min": 90,
+      "price": 3000,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-chocolate-gel",
+    "category_id": "fallback-spa-rituals",
+    "slug": "chocolate-gel",
+    "name_en": "Chocolate Gel Massage",
+    "name_hi": "चॉकलेट जेल मसाज",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 7,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-chocolate-gel-45",
+      "service_id": "fallback-chocolate-gel",
+      "duration_min": 45,
+      "price": 1800,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-aloe-vera-gel",
+    "category_id": "fallback-spa-rituals",
+    "slug": "aloe-vera-gel",
+    "name_en": "Aloe Vera Gel Massage",
+    "name_hi": "एलोवेरा जेल मसाज",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 8,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-aloe-vera-gel-45",
+      "service_id": "fallback-aloe-vera-gel",
+      "duration_min": 45,
+      "price": 2000,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-red-wine",
+    "category_id": "fallback-spa-rituals",
+    "slug": "red-wine",
+    "name_en": "Red Wine Therapy",
+    "name_hi": "रेड वाइन थेरेपी",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 9,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-red-wine-45",
+      "service_id": "fallback-red-wine",
+      "duration_min": 45,
+      "price": 2500,
+      "is_active": true
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fallback-combos",
+  "slug": "combos",
+  "kind": "spa",
+  "name_en": "Combos",
+  "name_hi": "कॉम्बो",
+  "description_en": "Longer rituals at a better price.",
+  "description_hi": "लंबे रिचुअल, बेहतर दाम में।",
+  "sort": 3,
+  "is_active": true,
+  "services": [
+   {
+    "id": "fallback-spa-facial",
+    "category_id": "fallback-combos",
+    "slug": "spa-facial",
+    "name_en": "Spa & Facial",
+    "name_hi": "स्पा और फेशियल",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 1,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-spa-facial-90",
+      "service_id": "fallback-spa-facial",
+      "duration_min": 90,
+      "price": 2000,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-body-polishing",
+    "category_id": "fallback-combos",
+    "slug": "body-polishing",
+    "name_en": "Body Polishing",
+    "name_hi": "बॉडी पॉलिशिंग",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 2,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-body-polishing-120",
+      "service_id": "fallback-body-polishing",
+      "duration_min": 120,
+      "price": 3000,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-spa-scrub",
+    "category_id": "fallback-combos",
+    "slug": "spa-scrub",
+    "name_en": "Spa & Scrub",
+    "name_hi": "स्पा और स्क्रब",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 3,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-spa-scrub-90",
+      "service_id": "fallback-spa-scrub",
+      "duration_min": 90,
+      "price": 2500,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-full-body-waxing",
+    "category_id": "fallback-combos",
+    "slug": "full-body-waxing",
+    "name_en": "Full Body Waxing",
+    "name_hi": "फुल बॉडी वैक्सिंग",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 4,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-full-body-waxing-60",
+      "service_id": "fallback-full-body-waxing",
+      "duration_min": 60,
+      "price": 3000,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-full-body-dtan",
+    "category_id": "fallback-combos",
+    "slug": "full-body-dtan",
+    "name_en": "Full Body D-Tan",
+    "name_hi": "फुल बॉडी डी-टैन",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "bed",
+    "commission_percent": null,
+    "sort": 5,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-full-body-dtan-60",
+      "service_id": "fallback-full-body-dtan",
+      "duration_min": 60,
+      "price": 3000,
+      "is_active": true
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fallback-hair",
+  "slug": "hair",
+  "kind": "salon",
+  "name_en": "Hair",
+  "name_hi": "हेयर",
+  "description_en": null,
+  "description_hi": null,
+  "sort": 4,
+  "is_active": true,
+  "services": [
+   {
+    "id": "fallback-haircut-men",
+    "category_id": "fallback-hair",
+    "slug": "haircut-men",
+    "name_en": "Haircut — Men",
+    "name_hi": "हेयरकट — पुरुष",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 1,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-haircut-men-30",
+      "service_id": "fallback-haircut-men",
+      "duration_min": 30,
+      "price": 300,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-haircut-women",
+    "category_id": "fallback-hair",
+    "slug": "haircut-women",
+    "name_en": "Haircut — Women",
+    "name_hi": "हेयरकट — महिला",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 2,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-haircut-women-45",
+      "service_id": "fallback-haircut-women",
+      "duration_min": 45,
+      "price": 600,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-beard",
+    "category_id": "fallback-hair",
+    "slug": "beard",
+    "name_en": "Beard Shaping",
+    "name_hi": "दाढ़ी शेपिंग",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 3,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-beard-20",
+      "service_id": "fallback-beard",
+      "duration_min": 20,
+      "price": 200,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-head-massage",
+    "category_id": "fallback-hair",
+    "slug": "head-massage",
+    "name_en": "Head Massage",
+    "name_hi": "हेड मसाज",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 4,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-head-massage-30",
+      "service_id": "fallback-head-massage",
+      "duration_min": 30,
+      "price": 500,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-hair-spa",
+    "category_id": "fallback-hair",
+    "slug": "hair-spa",
+    "name_en": "Hair Spa",
+    "name_hi": "हेयर स्पा",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 5,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-hair-spa-60",
+      "service_id": "fallback-hair-spa",
+      "duration_min": 60,
+      "price": 1200,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-global-colour",
+    "category_id": "fallback-hair",
+    "slug": "global-colour",
+    "name_en": "Global Hair Colour",
+    "name_hi": "ग्लोबल हेयर कलर",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 6,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-global-colour-120",
+      "service_id": "fallback-global-colour",
+      "duration_min": 120,
+      "price": 2500,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-keratin",
+    "category_id": "fallback-hair",
+    "slug": "keratin",
+    "name_en": "Keratin Treatment",
+    "name_hi": "केराटिन ट्रीटमेंट",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 7,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-keratin-180",
+      "service_id": "fallback-keratin",
+      "duration_min": 180,
+      "price": 4500,
+      "is_active": true
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fallback-skin",
+  "slug": "skin",
+  "kind": "salon",
+  "name_en": "Skin & Face",
+  "name_hi": "स्किन और फेस",
+  "description_en": null,
+  "description_hi": null,
+  "sort": 5,
+  "is_active": true,
+  "services": [
+   {
+    "id": "fallback-cleanup",
+    "category_id": "fallback-skin",
+    "slug": "cleanup",
+    "name_en": "Face Clean-up",
+    "name_hi": "फेस क्लीन-अप",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 1,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-cleanup-30",
+      "service_id": "fallback-cleanup",
+      "duration_min": 30,
+      "price": 800,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-facial",
+    "category_id": "fallback-skin",
+    "slug": "facial",
+    "name_en": "Signature Facial",
+    "name_hi": "सिग्नेचर फेशियल",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 2,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-facial-60",
+      "service_id": "fallback-facial",
+      "duration_min": 60,
+      "price": 1500,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-detan-face",
+    "category_id": "fallback-skin",
+    "slug": "detan-face",
+    "name_en": "Face & Neck D-Tan",
+    "name_hi": "फेस और नेक डी-टैन",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 3,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-detan-face-30",
+      "service_id": "fallback-detan-face",
+      "duration_min": 30,
+      "price": 700,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-threading",
+    "category_id": "fallback-skin",
+    "slug": "threading",
+    "name_en": "Eyebrow Threading",
+    "name_hi": "आइब्रो थ्रेडिंग",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 4,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-threading-10",
+      "service_id": "fallback-threading",
+      "duration_min": 10,
+      "price": 50,
+      "is_active": true
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "fallback-hands-feet",
+  "slug": "hands-feet",
+  "kind": "salon",
+  "name_en": "Hands, Feet & Waxing",
+  "name_hi": "हाथ, पैर और वैक्सिंग",
+  "description_en": null,
+  "description_hi": null,
+  "sort": 6,
+  "is_active": true,
+  "services": [
+   {
+    "id": "fallback-manicure",
+    "category_id": "fallback-hands-feet",
+    "slug": "manicure",
+    "name_en": "Manicure",
+    "name_hi": "मैनीक्योर",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 1,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-manicure-40",
+      "service_id": "fallback-manicure",
+      "duration_min": 40,
+      "price": 600,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-pedicure",
+    "category_id": "fallback-hands-feet",
+    "slug": "pedicure",
+    "name_en": "Pedicure",
+    "name_hi": "पेडीक्योर",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 2,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-pedicure-50",
+      "service_id": "fallback-pedicure",
+      "duration_min": 50,
+      "price": 800,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-wax-arms",
+    "category_id": "fallback-hands-feet",
+    "slug": "wax-arms",
+    "name_en": "Waxing — Full Arms",
+    "name_hi": "वैक्सिंग — पूरे हाथ",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 3,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-wax-arms-20",
+      "service_id": "fallback-wax-arms",
+      "duration_min": 20,
+      "price": 400,
+      "is_active": true
+     }
+    ]
+   },
+   {
+    "id": "fallback-wax-legs",
+    "category_id": "fallback-hands-feet",
+    "slug": "wax-legs",
+    "name_en": "Waxing — Full Legs",
+    "name_hi": "वैक्सिंग — पूरे पैर",
+    "description_en": null,
+    "description_hi": null,
+    "tag_en": null,
+    "tag_hi": null,
+    "resource": "chair",
+    "commission_percent": null,
+    "sort": 4,
+    "is_active": true,
+    "service_variants": [
+     {
+      "id": "fallback-wax-legs-30",
+      "service_id": "fallback-wax-legs",
+      "duration_min": 30,
+      "price": 600,
+      "is_active": true
+     }
+    ]
+   }
+  ]
+ }
+]
