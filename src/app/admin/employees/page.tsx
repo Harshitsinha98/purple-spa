@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { CheckCircle2, Clock3, Loader2, Pencil, Plus } from "lucide-react";
+import { CalendarOff, CheckCircle2, Clock3, Loader2, Pencil, Plus, Trash2 } from "lucide-react";
 import { supabaseBrowser } from "@/lib/supabase/client";
-import { prettyPhone } from "@/lib/format";
+import { fmtDate, inr, istDate, prettyPhone } from "@/lib/format";
 import { Modal, Notice, PageHead, Panel, Toggle } from "@/components/admin/ui";
-import type { Category, Employee, Gender, Service } from "@/lib/types";
+import type { Category, Employee, Gender, MonthlyReport, Service, TimeOff } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 type Draft = Omit<Employee, "id" | "profile_id" | "created_at"> & { id?: string; profile_id?: string | null; skills: Set<string> };
@@ -18,6 +18,8 @@ export default function EmployeesAdmin() {
   const [cats, setCats] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [draft, setDraft] = useState<Draft | null>(null);
+  const [month, setMonth] = useState<MonthlyReport | null>(null);
+  const [leave, setLeave] = useState<TimeOff[]>([]);
 
   const load = useCallback(async () => {
     const db = supabaseBrowser();
@@ -33,6 +35,9 @@ export default function EmployeesAdmin() {
     setSkills(map);
     setServices((s.data as Service[]) ?? []);
     setCats((c.data as Category[]) ?? []);
+    const [r, t] = await Promise.all([db.rpc("monthly_report", { p_month: istDate(0) }), db.from("employee_time_off").select("*").gte("day", istDate(0)).order("day")]);
+    setMonth((r.data as MonthlyReport) ?? null);
+    setLeave((t.data as TimeOff[]) ?? []);
     setLoading(false);
   }, []);
 
@@ -78,16 +83,26 @@ export default function EmployeesAdmin() {
                 {!e.is_active && <span className="rounded-full bg-neutral-200 px-2.5 py-1">Inactive</span>}
                 <span className="text-muted">{skills[e.id]?.size ?? 0} services</span>
               </div>
+              {(() => {
+                const m = month?.employees.find((x) => x.id === e.id);
+                const next = leave.filter((l) => l.employee_id === e.id);
+                return (
+                  <div className="mt-3 border-t border-line pt-3 text-sm">
+                    {m && <p className="text-muted">This month: <span className="font-semibold text-ink">{m.bookings}</span> sessions · {(m.minutes / 60).toFixed(1)} h · {inr(m.revenue)} · commission <span className="font-semibold text-ink">{inr(m.commission)}</span></p>}
+                    {next.length > 0 && <p className="mt-1 flex items-center gap-1.5 text-[#7a5a17]"><CalendarOff className="size-3.5" /> Leave: {next.slice(0, 3).map((l) => fmtDate(`${l.day}T12:00:00+05:30`)).join(", ")}{next.length > 3 && ` +${next.length - 3}`}</p>}
+                  </div>
+                );
+              })()}
             </Panel>
           ))}
         </div>
       )}
-      <EmployeeModal draft={draft} services={services} cats={cats} onClose={() => setDraft(null)} onSaved={() => { setDraft(null); load(); }} />
+      <EmployeeModal draft={draft} services={services} cats={cats} onClose={() => setDraft(null)} onSaved={() => { setDraft(null); load(); }} onLeaveChange={load} />
     </div>
   );
 }
 
-function EmployeeModal({ draft, services, cats, onClose, onSaved }: { draft: Draft | null; services: Service[]; cats: Category[]; onClose: () => void; onSaved: () => void }) {
+function EmployeeModal({ draft, services, cats, onClose, onSaved, onLeaveChange }: { draft: Draft | null; services: Service[]; cats: Category[]; onClose: () => void; onSaved: () => void; onLeaveChange: () => void }) {
   const [d, setD] = useState<Draft | null>(draft);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -184,9 +199,68 @@ function EmployeeModal({ draft, services, cats, onClose, onSaved }: { draft: Dra
             })}
           </div>
         </div>
+        {d.id && <LeaveEditor employeeId={d.id} onChange={onLeaveChange} />}
         {err && <Notice kind="error">{err}</Notice>}
         <button onClick={save} disabled={busy} className="btn btn-ink w-full">{busy && <Loader2 className="size-4 animate-spin" />} Save</button>
       </div>
     </Modal>
+  );
+}
+
+/** Days off. Bookings can't be assigned to this person on these days, and their slots don't show to customers. */
+function LeaveEditor({ employeeId, onChange }: { employeeId: string; onChange: () => void }) {
+  const [list, setList] = useState<TimeOff[]>([]);
+  const [day, setDay] = useState(istDate(1));
+  const [reason, setReason] = useState("");
+  const [err, setErr] = useState<string | null>(null);
+  const load = useCallback(async () => {
+    const { data } = await supabaseBrowser().from("employee_time_off").select("*").eq("employee_id", employeeId).gte("day", istDate(0)).order("day");
+    setList((data as TimeOff[]) ?? []);
+  }, [employeeId]);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch
+  useEffect(() => { load(); }, [load]);
+
+  const add = async () => {
+    setErr(null);
+    const db = supabaseBrowser();
+    const start = new Date(`${day}T00:00:00+05:30`).toISOString();
+    const end = new Date(new Date(`${day}T00:00:00+05:30`).getTime() + 86400000).toISOString();
+    const { count } = await db.from("bookings").select("id", { count: "exact", head: true }).eq("employee_id", employeeId).in("status", ["assigned", "in_progress"]).gte("start_at", start).lt("start_at", end);
+    if (count && !confirm(`This person has ${count} booking(s) that day. Add leave anyway? You'll need to reassign them.`)) return;
+    const { error } = await db.from("employee_time_off").insert({ employee_id: employeeId, day, reason: reason.trim() || null });
+    if (error) return setErr(error.message.includes("duplicate") ? "Leave already added for that day." : error.message);
+    setReason("");
+    load();
+    onChange();
+  };
+  const remove = async (id: string) => {
+    await supabaseBrowser().from("employee_time_off").delete().eq("id", id);
+    load();
+    onChange();
+  };
+
+  return (
+    <div>
+      <p className="label">Leave / days off</p>
+      <div className="space-y-2 rounded-xl border border-line p-4">
+        {list.length === 0 && <p className="text-sm text-muted">No upcoming leave.</p>}
+        <ul className="space-y-1">
+          {list.map((l) => (
+            <li key={l.id} className="flex items-center justify-between text-sm">
+              <span>{fmtDate(`${l.day}T12:00:00+05:30`, "en", { weekday: "long" })}{l.reason && <span className="text-muted"> · {l.reason}</span>}</span>
+              <button onClick={() => remove(l.id)} className="grid size-8 cursor-pointer place-items-center rounded-full hover:bg-sand" aria-label="Remove leave"><Trash2 className="size-3.5" /></button>
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-wrap gap-2 pt-1">
+          <label className="sr-only" htmlFor="lv-day">Day</label>
+          <input id="lv-day" type="date" min={istDate(0)} className="field w-auto" value={day} onChange={(e) => setDay(e.target.value)} />
+          <label className="sr-only" htmlFor="lv-r">Reason</label>
+          <input id="lv-r" className="field flex-1" placeholder="Reason (optional)" value={reason} onChange={(e) => setReason(e.target.value)} />
+          <button type="button" onClick={add} className="btn btn-ghost">Add leave</button>
+        </div>
+        {err && <p className="text-sm text-magenta">{err}</p>}
+      </div>
+    </div>
   );
 }

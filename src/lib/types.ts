@@ -39,6 +39,7 @@ export interface Settings {
   advance_percent: number;
   auto_assign: boolean;
   payment_hold_min: number;
+  staff_early_start_min: number;
 }
 
 export interface Category {
@@ -152,6 +153,7 @@ export interface Booking {
   cancel_reason: string | null;
   completed_at: string | null;
   created_at: string;
+  customer_phone_key?: string;
   booking_items?: BookingItem[];
 }
 
@@ -192,4 +194,62 @@ export interface MonthlyReport {
   daily: { day: string; bookings: number; revenue: number }[];
   services: { name: string; count: number; revenue: number }[];
   employees: { id: string; name: string; bookings: number; no_show: number; minutes: number; revenue: number; commission: number }[];
+}
+
+/** What a therapist sees about a booking (no customer phone or email). */
+export interface StaffBooking {
+  id: string;
+  code: string;
+  customer_name: string;
+  start_at: string;
+  end_at: string;
+  resource: ResourceKind;
+  status: BookingStatus;
+  total_amount: number;
+  amount_paid: number;
+  payment_status: PaymentStatus;
+  payment_mode: PaymentMode;
+  notes: string | null;
+  commission_amount: number | null;
+  items: { id: string; name_en: string; name_hi: string; duration_min: number }[];
+  can_start: boolean;
+}
+
+export interface StaffStats {
+  month_completed: number;
+  month_minutes: number;
+  month_service_value: number;
+  month_commission: number;
+  month_no_show: number;
+  upcoming: number;
+  all_time_completed: number;
+  commission_percent: number;
+}
+
+export interface CustomerSummary {
+  phone_key: string;
+  name: string;
+  phone: string;
+  email: string | null;
+  customer_id: string | null;
+  bookings: number;
+  completed: number;
+  cancelled: number;
+  no_show: number;
+  spent: number;
+  paid: number;
+  first_visit: string | null;
+  last_visit: string | null;
+  next_visit: string | null;
+  tags: string[];
+  is_blocked: boolean;
+  note: string | null;
+  total_count: number;
+}
+
+export interface TimeOff {
+  id: string;
+  employee_id: string;
+  day: string;
+  reason: string | null;
 }

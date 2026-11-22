@@ -30,6 +30,7 @@ export const DEFAULT_SETTINGS: Settings = {
   advance_percent: 30,
   auto_assign: true,
   payment_hold_min: 15,
+  staff_early_start_min: 0,
 };
 
 function fallback(): Catalog {

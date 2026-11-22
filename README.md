@@ -5,8 +5,8 @@ Next.js 16 + Supabase + Razorpay + WhatsApp Cloud API, deployed on Vercel.
 - **Website** (`/`): scroll-driven 3D walk into the spa (React Three Fiber, real photos), menu, salon, facilities, reviews, map. English + Hindi.
 - **Booking** (`/book`): choose services → day & time → details → pay full / advance / at spa. Google sign-in.
 - **Customer** (`/account`): bookings update live (therapist assignment appears instantly), cancel within the allowed window, pay balance.
-- **Staff app** (`/staff`): installable PWA for therapists — today's schedule, start/complete, collect cash/UPI, push alerts.
-- **Admin** (`/admin`): bookings board, walk-ins, assign therapists (manual or auto), services & rates, employees & their services, payments & refunds, monthly reports with CSV export, settings.
+- **Staff app** (`/staff`): installable PWA for therapists — today / upcoming / calendar, own monthly numbers and leave, start (locked until the booked time), complete, collect cash/UPI, push alerts. Customer phone and email are never sent to staff.
+- **Admin** (`/admin`): today board, bookings as day/week/month calendar (therapist columns in day view) or a searchable, filterable list with CSV; booking panel with assign, start early, undo start, reschedule, payments, refunds and history; customers with visit history, spend, notes, tags and blocking; employees with services, commission and leave; services & rates; payments; monthly reports; settings.
 
 ## One-time setup
 
@@ -14,6 +14,8 @@ Next.js 16 + Supabase + Razorpay + WhatsApp Cloud API, deployed on Vercel.
 Supabase Dashboard → **SQL Editor** → run, in order:
 1. `supabase/migrations/0001_schema.sql`
 2. `supabase/migrations/0002_seed.sql` (menu prices + admin email `purplespasalon23@gmail.com`)
+3. `supabase/migrations/0003_grants.sql` (API access for the website; Row Level Security still applies)
+4. `supabase/migrations/0004_staff_privacy_crm.sql` (hides customer phone from staff, start-time lock, customer records, leave, reschedule)
 
 Salon prices and the Waxing / D-Tan durations in the seed are placeholders — edit them in **Admin → Services**.
 
