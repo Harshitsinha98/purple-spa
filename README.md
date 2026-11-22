@@ -14,6 +14,7 @@ Next.js 16 + Supabase + Razorpay + WhatsApp Cloud API, deployed on Vercel.
 Supabase Dashboard → **SQL Editor** → run, in order:
 1. `supabase/migrations/0001_schema.sql`
 2. `supabase/migrations/0002_seed.sql` (menu prices + admin email `purplespasalon23@gmail.com`)
+3. `supabase/migrations/0003_grants.sql` (API access for the website; Row Level Security still applies)
 
 Salon prices and the Waxing / D-Tan durations in the seed are placeholders — edit them in **Admin → Services**.
 
