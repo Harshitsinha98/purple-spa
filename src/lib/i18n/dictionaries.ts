@@ -12,9 +12,22 @@ const en = {
     signIn: "Sign in",
     language: "हिंदी",
   },
+  hero: {
+    eyebrow: "Spa & Salon · M.P. Nagar, Bhopal",
+    line1: "Skin comes",
+    line2: "first.",
+    body: "Massages chosen by pressure, body scrubs and salon care, in quiet air-conditioned rooms on the second floor of Mansarovar Complex.",
+    book: "Book a session",
+    menu: "See the menu",
+    rating: "from 83 reviews",
+    today: "Today",
+    scroll: "Scroll",
+  },
+  walk: {
+    eyebrow: "Step inside",
+    title: "A short walk from the door to your table.",
+  },
   tour: {
-    scroll: "Scroll to step inside",
-    loading: "Switching on the lights",
     chapters: [
       { n: "I", title: "Second floor, Mansarovar Complex", body: "Come up to SF 14 on the second floor. The door opens onto violet light." },
       { n: "II", title: "Reception", body: "Tell us how your body feels today. We'll help you pick the right pressure." },
@@ -64,6 +77,8 @@ const en = {
     body: "Across 83 public reviews, guests mention the same things again and again:",
     themes: ["Clean, hygienic rooms", "Well-trained, polite staff", "Calm ambience", "Fair prices for the quality"],
     cta: "Read reviews on Google",
+    breakdown: "Rating breakdown",
+    source: "Public reviews on Wanderlog",
   },
   visit: {
     eyebrow: "Visit",
@@ -73,6 +88,10 @@ const en = {
     call: "Call",
     whatsapp: "WhatsApp",
     directions: "Directions",
+    openNow: "Open now",
+    closesAt: "closes",
+    closed: "Closed now",
+    opensAt: "opens",
   },
   footer: {
     rights: "All rights reserved.",
@@ -215,9 +234,22 @@ const hi: Dict = {
     signIn: "साइन इन",
     language: "English",
   },
+  hero: {
+    eyebrow: "स्पा और सैलून · एम.पी. नगर, भोपाल",
+    line1: "त्वचा सबसे",
+    line2: "पहले।",
+    body: "दबाव के हिसाब से चुनी गई मसाज, बॉडी स्क्रब और सैलून सेवाएँ, मानसरोवर कॉम्प्लेक्स की दूसरी मंज़िल पर शांत एसी कमरों में।",
+    book: "बुकिंग करें",
+    menu: "मेन्यू देखें",
+    rating: "83 रिव्यू से",
+    today: "आज",
+    scroll: "स्क्रॉल",
+  },
+  walk: {
+    eyebrow: "अंदर आइए",
+    title: "दरवाज़े से आपकी टेबल तक, एक छोटी सी सैर।",
+  },
   tour: {
-    scroll: "अंदर आने के लिए स्क्रॉल करें",
-    loading: "रोशनी जल रही है",
     chapters: [
       { n: "I", title: "दूसरी मंज़िल, मानसरोवर कॉम्प्लेक्स", body: "दूसरी मंज़िल पर SF 14 में आइए। दरवाज़ा खुलते ही बैंगनी रोशनी।" },
       { n: "II", title: "रिसेप्शन", body: "बताइए आज शरीर कैसा महसूस कर रहा है। सही दबाव चुनने में हम मदद करेंगे।" },
@@ -267,6 +299,8 @@ const hi: Dict = {
     body: "83 सार्वजनिक रिव्यू में मेहमान बार-बार यही बातें कहते हैं:",
     themes: ["साफ़ और स्वच्छ कमरे", "प्रशिक्षित, विनम्र स्टाफ़", "शांत माहौल", "क्वालिटी के हिसाब से सही दाम"],
     cta: "Google पर रिव्यू पढ़ें",
+    breakdown: "रेटिंग का बँटवारा",
+    source: "Wanderlog पर सार्वजनिक रिव्यू",
   },
   visit: {
     eyebrow: "पता",
@@ -276,6 +310,10 @@ const hi: Dict = {
     call: "कॉल करें",
     whatsapp: "व्हाट्सऐप",
     directions: "रास्ता देखें",
+    openNow: "अभी खुला है",
+    closesAt: "बंद होगा",
+    closed: "अभी बंद है",
+    opensAt: "खुलेगा",
   },
   footer: {
     rights: "सर्वाधिकार सुरक्षित।",
